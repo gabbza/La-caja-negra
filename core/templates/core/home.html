@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Funciones</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'events/css/seats.css' %}">
+</head>
+<body>
+    <div class="page">
+        <h1 class="title">Funciones activas</h1>
+        {% if shows %}
+            <div class="layout">
+                <div class="section card">
+                    {% for show in shows %}
+                        <div class="meta">
+                            <div><strong>{{ show.event.title }}</strong></div>
+                            <div class="subtitle">{{ show.venue_name }} | {{ show.start_at|date:"Y-m-d H:i" }}</div>
+                            <div><a href="{% url 'show_detail' show.id %}">Seleccionar asientos</a></div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="section summary">
+                    <h3>Bienvenido</h3>
+                    <p>Elige una funcion y pasa al mapa de asientos.</p>
+                </div>
+            </div>
+        {% else %}
+            <p>No hay funciones activas.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

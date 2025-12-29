@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Compra exitosa</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'events/css/seats.css' %}">
+</head>
+<body>
+    <div class="page">
+        <h1 class="title">Pago confirmado</h1>
+        <div class="subtitle">{{ show.event.title }} | {{ show.venue_name }} | {{ show.start_at|date:"Y-m-d H:i" }}</div>
+        <div class="card">
+            <p>Tu compra se registro correctamente.</p>
+            <div class="meta"><a href="{% url 'home' %}">Volver al inicio</a></div>
+        </div>
+    </div>
+</body>
+</html>

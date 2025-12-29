@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear cuenta</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'events/css/seats.css' %}">
+</head>
+<body>
+  <div class="page">
+    <h1 class="title">Crear cuenta</h1>
+    <div class="subtitle">Regístrate para seleccionar asientos y comprar boletos</div>
+
+    <div class="card">
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="actions">
+          <button type="submit">Registrarme</button>
+        </div>
+      </form>
+
+      <div class="meta" style="margin-top:12px;">
+        ¿Ya tienes cuenta? <a href="{% url 'login' %}">Inicia sesión</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

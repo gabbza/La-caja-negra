@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Seleccion de asientos</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'events/css/seats.css' %}">
+</head>
+<body>
+    <div class="page">
+        <h1 class="title">{{ show.event.title }}</h1>
+        <div class="subtitle">{{ show.venue_name }} | {{ show.start_at|date:"Y-m-d H:i" }}</div>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        {% if show_seats %}
+            <div class="layout">
+                <div class="section card">
+                    <div class="stage"></div>
+                    <p class="meta">Apartados duran {{ hold_minutes }} minutos.</p>
+                    <form method="post">
+                        {% csrf_token %}
+                    <div class="grid">
+                        {% for ss in show_seats %}
+
+                            {% cycle 1 2 3 4 5 6 7 8 9 as col silent %}
+                            {% if col == 5 %}
+                            <div class="aisle"></div>
+                            {% endif %}
+
+                            <label class="seat {% if ss.status == 'SOLD' %}sold{% elif ss.status == 'HELD' %}held{% else %}available{% endif %}">
+                            <input type="checkbox" name="seat_ids" value="{{ ss.seat.id }}"
+                                    {% if ss.status != 'AVAILABLE' %}disabled{% endif %}>
+                            <span class="seat-number">{{ ss.seat.number }}</span>
+                            </label>
+
+                        {% endfor %}
+                        </div>
+                    <div class="actions">
+                        <button type="submit">Continuar a checkout</button>
+                    </div>
+                    </form>
+                </div>
+                <div class="section summary">
+                    <h3>Estado de asientos</h3>
+                    <div class="legend">
+                        <span><i class="dot available"></i> Disponible</span>
+                        <span><i class="dot held"></i> Apartado</span>
+                        <span><i class="dot sold"></i> Vendido</span>
+                    </div>
+                    <p class="meta">Selecciona tus asientos y confirma.</p>
+                </div>
+            </div>
+        {% else %}
+            <p>No hay asientos para esta funcion.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

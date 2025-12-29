@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'events/css/seats.css' %}">
+</head>
+<body>
+    <div class="page">
+        <h1 class="title">Checkout simulado</h1>
+        <div class="subtitle">
+            {{ show.event.title }} | {{ show.venue_name }} | {{ show.start_at|date:"Y-m-d H:i" }}
+        </div>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+            <div class="meta">
+                <a href="{% url 'show_detail' show.id %}">Volver a seleccionar</a>
+            </div>
+        {% else %}
+            <div class="card">
+                <h3>Asientos seleccionados</h3>
+                <ul>
+                    {% for ss in held_seats %}
+                        <li>Asiento {{ ss.seat.number }}</li>
+                    {% endfor %}
+                </ul>
+
+                <p class="meta">Precio por asiento: ${{ price_per_seat }}</p>
+                <p class="meta"><strong>Total:</strong> ${{ total }}</p>
+
+                <div class="actions">
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit">Pagar (simulado)</button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
